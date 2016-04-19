@@ -26,6 +26,9 @@ var messages = {
 	90: "Even if that would be a shame...",
 	95: "Just don't let the pressure get to high",
 	100: "100? You can do 100000!!",
+	105: "Are you a wizard?",
+	
+	1337: "gr8 m8",
 	
 	9001: "IT'S OVER 9000!!!!!"
 }

@@ -1,0 +1,13 @@
+﻿1.0-pre-release-2
+
+ * Birds and walls no longer move if hit by the coconut
+
+
+
+
+
+1.0-pre-release
+
+ * Day-Night cycle
+ * Birds glow a little bit
+ * Enabled window resize

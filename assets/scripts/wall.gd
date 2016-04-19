@@ -1,18 +1,13 @@
 
-extends KinematicBody2D
+extends StaticBody2D
 
-const SPEED = 70
+const SPEED = 140
 
 var pos
 
 func _ready():
 	add_to_group("wall")
 	set_process(true)
-	set_fixed_process(true)
-
-
-func _fixed_process(delta):
-	move(Vector2(-SPEED * delta, 0))
 
 
 

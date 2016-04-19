@@ -37,7 +37,6 @@ func _fixed_process(delta):
 	if is_colliding():
 		var collider = get_collider()
 		if collider.is_in_group("wall"):
-			print("test")
 			get_node("/root/player").stop_game()
 		elif collider.is_in_group("bird"):
 			got_point = true

@@ -1,18 +1,14 @@
 
-extends KinematicBody2D
+extends StaticBody2D
 
-const SPEED = 70 
+const SPEED = 140 
 
 var has_played = false
 
 func _ready():
 	add_to_group("bird")
-	set_fixed_process(true)
 	set_process(true)
 
-
-func _fixed_process(delta):
-	move(Vector2(-SPEED * delta, 0))
 
 
 
