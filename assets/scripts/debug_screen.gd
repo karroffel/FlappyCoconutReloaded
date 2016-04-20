@@ -31,7 +31,6 @@ func _process(delta):
 		if fps_ttl <= 0:
 			fps_ttl = FPS_COOLDOWN
 			fps = 1 / delta
-			get_node("fps/fps1").set_text("FPS: ")
 			get_node("fps/fps2").set_text(str(int(fps)))
 	
 func toggle_screen():
