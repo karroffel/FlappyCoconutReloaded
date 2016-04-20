@@ -5,6 +5,7 @@
  * Splash Screen
  * avg. score
  * sound settings
+ * pause screen
 
 
 
