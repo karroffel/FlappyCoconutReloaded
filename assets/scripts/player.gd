@@ -3,16 +3,14 @@ extends Node
 
 var score
 var all_score
+var highscore
 var deaths
 
-var master_sound_volume = 1.0
-var jump_sound_volume = 1.0
-var point_sound_volume = 1.0
-var collision_sound_volume = 1.0
+var master_sound_volume
+var jump_sound_volume
+var point_sound_volume
+var collision_sound_volume
 
-
-
-var is_in_menu = false
 
 
 var messages = {
@@ -46,17 +44,20 @@ var messages = {
 }
 
 
-func get_is_in_menu():
-	return is_in_menu
-
-func set_is_in_menu(m):
-	is_in_menu = m
-
 
 func _ready():
+	get_tree().set_auto_accept_quit(false)
 	score = 0
-	all_score = 0
-	deaths = 0
+	load_state()
+	
+	
+
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		quit_game()
+
+
+	
 
 func get_score():
 	return score
@@ -69,6 +70,8 @@ func set_score(s):
 
 func score_point():
 	score += 1
+	if score > highscore:
+		highscore = score
 	all_score += 1
 	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
@@ -142,3 +145,79 @@ func death():
 
 func get_deaths():
 	return deaths
+
+
+
+
+func quit_game():
+	save_state()
+	get_tree().quit()
+	
+
+
+const STATS_PATH = "stats.save"
+const PASSWORD   = "windowsisttoll"
+
+
+func load_state():
+	var file = File.new()
+	if not file.file_exists(STATS_PATH):
+		create_initial_save_game(STATS_PATH)
+	file.open_encrypted_with_pass(STATS_PATH, File.READ, PASSWORD)
+	var text = file.get_as_text()
+	file.close()
+	
+	var dict = {}
+	dict.parse_json(text)
+
+	all_score = dict["all_score"]
+	highscore = dict["highscore"]
+	deaths    = dict["deaths"]
+	
+	master_sound_volume    = dict["master_sound_volume"]
+	jump_sound_volume      = dict["jump_sound_volume"]
+	point_sound_volume     = dict["point_sound_volume"]
+	collision_sound_volume = dict["collision_sound_volume"]
+
+
+
+
+func save_state():
+	var file = File.new()
+	file.open_encrypted_with_pass(STATS_PATH, File.WRITE, PASSWORD)
+	
+	var dict = {}
+	
+	dict["all_score"] = all_score
+	dict["highscore"] = highscore
+	dict["deaths"]    = deaths
+	
+	dict["master_sound_volume"]    = master_sound_volume
+	dict["jump_sound_volume"]      = jump_sound_volume
+	dict["point_sound_volume"]     = point_sound_volume
+	dict["collision_sound_volume"] = collision_sound_volume
+	
+	var text = dict.to_json()
+	
+	file.store_string(text)
+	file.close()
+	
+
+
+
+func create_initial_save_game(path):
+	var file = File.new()
+	file.open_encrypted_with_pass(path, File.WRITE, PASSWORD)
+	var dict = {
+		"all_score": 0,
+		"highscore": 0,
+		"deaths": 0,
+		
+		"master_sound_volume": 1.0,
+		"jump_sound_volume": 1.0,
+		"point_sound_volume": 1.0,
+		"collision_sound_volume": 1.0
+	}
+	var json = dict.to_json()
+	file.store_string(json)
+	file.close()
