@@ -5,6 +5,7 @@ var score
 var all_score
 var deaths
 
+var master_sound_volume = 1.0
 var jump_sound_volume = 1.0
 var point_sound_volume = 1.0
 var collision_sound_volume = 1.0
@@ -81,6 +82,10 @@ func get_hud():
 
 
 
+func get_master_sound_volume():
+	return master_sound_volume
+
+
 func get_point_sound_volume():
 	return point_sound_volume
 
@@ -90,6 +95,9 @@ func get_jump_sound_volume():
 func get_collision_sound_volume():
 	return collision_sound_volume
 
+
+func set_master_sound_volume(v):
+	master_sound_volume = v
 
 func set_point_sound_volume(v):
 	point_sound_volume = v
@@ -116,8 +124,21 @@ func active_scene():
 
 func death():
 	deaths += 1
+	#var end_screen = load("scenes/end_screen.scn").instance()
+	#change_scene(end_screen)
+	var child_count = active_scene().get_child_count()
+	var child
+	for i in range (0, child_count):
+		child = active_scene().get_child(i)
+		child.set_process(false)
+		if child.get_name() == "coconut":
+			child.set_dying(true)
+			child.set_y_acceleration(0)
+	active_scene().set_process(false)
+	
 	var end_screen = load("scenes/end_screen.scn").instance()
-	change_scene(end_screen)
+	end_screen.set_name("end_screen")
+	get_tree().get_current_scene().add_child(end_screen)
 
 func get_deaths():
 	return deaths
