@@ -103,8 +103,20 @@ func active_scene():
 
 func death():
 	deaths += 1
+	#var end_screen = load("scenes/end_screen.scn").instance()
+	#change_scene(end_screen)
+	var child_count = active_scene().get_child_count()
+	var child
+	for i in range (0, child_count):
+		child = active_scene().get_child(i)
+		child.set_process(false)
+		if child.get_name() == "coconut":
+			child.set_dying(true)
+			child.set_y_acceleration(0)
+	
 	var end_screen = load("scenes/end_screen.scn").instance()
-	change_scene(end_screen)
+	end_screen.set_name("end_screen")
+	get_tree().get_current_scene().add_child(end_screen)
 
 func get_deaths():
 	return deaths
