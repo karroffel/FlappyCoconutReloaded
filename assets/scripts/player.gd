@@ -5,6 +5,7 @@ var score
 var all_score
 var deaths
 
+var master_sound_volume = 1.0
 var jump_sound_volume = 1.0
 var point_sound_volume = 1.0
 var collision_sound_volume = 1.0
@@ -81,6 +82,10 @@ func get_hud():
 
 
 
+func get_master_sound_volume():
+	return master_sound_volume
+
+
 func get_point_sound_volume():
 	return point_sound_volume
 
@@ -90,6 +95,9 @@ func get_jump_sound_volume():
 func get_collision_sound_volume():
 	return collision_sound_volume
 
+
+func set_master_sound_volume(v):
+	master_sound_volume = v
 
 func set_point_sound_volume(v):
 	point_sound_volume = v
