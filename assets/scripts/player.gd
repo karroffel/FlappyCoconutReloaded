@@ -57,7 +57,8 @@ func _notification(what):
 		quit_game()
 
 
-	
+func get_highscore():
+	return highscore
 
 func get_score():
 	return score

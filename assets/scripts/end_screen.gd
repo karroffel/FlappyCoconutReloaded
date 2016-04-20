@@ -11,9 +11,11 @@ func _ready():
 	is_input_pressed = Input.is_action_pressed("jump")
 	
 	set_process(true)
+	var highscore = get_node("/root/player").get_highscore()
 	var score = get_node("/root/player").get_score()
 	var all_score = get_node("/root/player").get_all_score()
 	var death = get_node("/root/player").get_deaths()
+	get_node("end/highscore/score").set_text(str(highscore))
 	get_node("end/score/score").set_text(str(score))
 	get_node("end/death/deaths").set_text(str(death))
 	get_node("end/s_d/s_d").set_text(str(float(all_score) / float(death)))

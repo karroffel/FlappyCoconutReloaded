@@ -6,6 +6,8 @@
  * avg. score
  * sound settings
  * pause screen
+ * highscore
+ * save state
 
 
 
