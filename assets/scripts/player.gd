@@ -2,6 +2,12 @@
 extends Node
 
 var score
+var all_score
+var deaths
+
+var jump_sound_volume = 1.0
+var point_sound_volume = 1.0
+var collision_sound_volume = 1.0
 
 var messages = {
 	1: "A good start!",
@@ -35,15 +41,21 @@ var messages = {
 
 func _ready():
 	score = 0
+	all_score = 0
+	deaths = 0
 
 func get_score():
 	return score
+	
+func get_all_score():
+	return all_score
 
 func set_score(s):
 	score = s
 
 func score_point():
 	score += 1
+	all_score += 1
 	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
 		get_node("/root/player").get_hud().display_message(messages[score], 2)
@@ -56,10 +68,30 @@ func get_hud():
 
 
 
+func get_point_sound_volume():
+	return point_sound_volume
+
+func get_jump_sound_volume():
+	return jump_sound_volume
+
+func get_collision_sound_volume():
+	return collision_sound_volume
+
+
+func set_point_sound_volume(v):
+	point_sound_volume = v
+
+func set_jump_sound_volume(v):
+	jump_sound_volume = v
+
+func set_collision_sound_volume(v):
+	collision_sound_volume = v
+
+
+
 func change_scene(node):
 	var as = active_scene()
 	get_tree().get_current_scene().remove_child(as)
-	as.queue_free();
 	get_tree().get_current_scene().add_child(node)
 	get_tree().get_current_scene().move_child(node, 0)
 	get_tree().get_current_scene().get_child(0).set_name("active_scene")
@@ -69,6 +101,10 @@ func active_scene():
 	return get_tree().get_current_scene().get_node("active_scene")
 
 
-func stop_game():
+func death():
+	deaths += 1
 	var end_screen = load("scenes/end_screen.scn").instance()
 	change_scene(end_screen)
+
+func get_deaths():
+	return deaths
