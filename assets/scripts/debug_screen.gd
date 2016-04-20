@@ -1,37 +1,44 @@
 
 extends VBoxContainer
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
 
 var fps = 0
 var is_active = false
+var was_pressed = false
+
+const FPS_COOLDOWN = 0.5
+
+var fps_ttl = 0
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_process(true)
 	hide()
 
 
 func _process(delta):
 	
-	if Input.is_action_pressed("debug_key"):
+	var is_pressed = Input.is_action_pressed("debug_key")
+	
+	if is_pressed and not was_pressed:
+		was_pressed = true
 		toggle_screen()
-
-	fps = 1 / delta
-	get_node("fps/fps1").set_text("FPS: ")
-	get_node("fps/fps2").set_text(str(fps))
+	elif was_pressed and not is_pressed:
+		was_pressed = false
+		
+	if is_active:
+		
+		fps_ttl -= delta
+		if fps_ttl <= 0:
+			fps_ttl = FPS_COOLDOWN
+			fps = 1 / delta
+			get_node("fps/fps1").set_text("FPS: ")
+			get_node("fps/fps2").set_text(str(int(fps)))
 	
 func toggle_screen():
-	
-	if is_active:
-		is_active = false
-	else: 
-		is_active = true
 	
 	if is_active:
 		hide()
 	else:
 		show()
+		
+	is_active = not is_active
