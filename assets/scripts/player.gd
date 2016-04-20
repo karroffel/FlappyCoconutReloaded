@@ -126,6 +126,7 @@ func death():
 		if child.get_name() == "coconut":
 			child.set_dying(true)
 			child.set_y_acceleration(0)
+	active_scene().set_process(false)
 	
 	var end_screen = load("scenes/end_screen.scn").instance()
 	end_screen.set_name("end_screen")
