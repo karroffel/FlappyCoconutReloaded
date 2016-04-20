@@ -12,4 +12,5 @@ func _ready():
 
 func _process(delta):
 	if Input.is_action_pressed("jump"):
-		get_tree().change_scene("res://scenes/main.scn")
+		var main_scene = load("scenes/main.scn").instance()
+		get_node("/root/player").change_scene(main_scene)

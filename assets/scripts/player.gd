@@ -44,10 +44,31 @@ func set_score(s):
 
 func score_point():
 	score += 1
-	get_tree().get_current_scene().get_node("hud").update_score(score)
+	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
-		get_tree().get_current_scene().get_node("hud").display_message(messages[score], 2)
+		get_node("/root/player").get_hud().display_message(messages[score], 2)
+
+
+
+
+func get_hud():
+	return active_scene().get_node("hud")
+
+
+
+func change_scene(node):
+	var as = active_scene()
+	get_tree().get_current_scene().remove_child(as)
+	as.queue_free();
+	get_tree().get_current_scene().add_child(node)
+	get_tree().get_current_scene().move_child(node, 0)
+	get_tree().get_current_scene().get_child(0).set_name("active_scene")
+	
+
+func active_scene():
+	return get_tree().get_current_scene().get_node("active_scene")
 
 
 func stop_game():
-	get_tree().change_scene("res://scenes/end_screen.scn")
+	var end_screen = load("scenes/end_screen.scn").instance()
+	change_scene(end_screen)
