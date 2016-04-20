@@ -12,15 +12,30 @@ var just_jumped = false
 
 var jump_state = false
 
+var dying = false;
+
 const GRAVITIY = -9.81
 
 func _ready():
 	set_fixed_process(true)
 	set_process(true)
-	
+	just_jumped = true
+	y_acceleration = 4
+
+func set_dying(d):
+	dying = d
+
+func set_y_acceleration(y):
+	y_acceleration = y
 	
 func _fixed_process(delta):
 	y_acceleration += delta * GRAVITIY
+	
+	if dying:
+		var pos = get_pos()
+		if pos.y >= 0 and pos.y <= 400:
+			move(Vector2(0, -y_acceleration))
+		return
 	
 	if Input.is_action_pressed("jump"):
 		if not jump_state:
@@ -30,7 +45,7 @@ func _fixed_process(delta):
 		jump_state = true
 	elif jump_state:
 		jump_state = false
-
+	
 	
 	move(Vector2(0, -y_acceleration))
 	
