@@ -2,6 +2,11 @@
 extends Node
 
 var score
+var deaths
+
+var jump_sound_volume = 1.0
+var point_sound_volume = 0.1
+var collision_sound_volume = 0.1
 
 var messages = {
 	1: "A good start!",
@@ -35,6 +40,7 @@ var messages = {
 
 func _ready():
 	score = 0
+	deaths = 0
 
 func get_score():
 	return score
@@ -56,6 +62,27 @@ func get_hud():
 
 
 
+func get_point_sound_volume():
+	return point_sound_volume
+
+func get_jump_sound_volume():
+	return jump_sound_volume
+
+func get_collision_sound_volume():
+	return collision_sound_volume
+
+
+func set_point_sound_volume(v):
+	point_sound_volume = v
+
+func set_jump_sound_volume(v):
+	jump_sound_volume = v
+
+func set_collision_sound_volume(v):
+	collision_sound_volume = v
+
+
+
 func change_scene(node):
 	var as = active_scene()
 	get_tree().get_current_scene().remove_child(as)
@@ -69,6 +96,10 @@ func active_scene():
 	return get_tree().get_current_scene().get_node("active_scene")
 
 
-func stop_game():
+func death():
+	deaths += 1
 	var end_screen = load("scenes/end_screen.scn").instance()
 	change_scene(end_screen)
+
+func get_deaths():
+	return deaths

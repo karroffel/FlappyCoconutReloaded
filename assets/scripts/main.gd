@@ -7,8 +7,7 @@ var walls = []
 func _ready():
 	
 	add_to_group("game")
-	
-	get_node("/root/player").set_score(0)
+
 	
 	for i in range(1, 5):
 		var wall = load("scenes/wall.scn").instance()

@@ -25,9 +25,9 @@ func _fixed_process(delta):
 	if Input.is_action_pressed("jump"):
 		if not jump_state:
 			just_jumped = true
+			was_high = true
+			y_acceleration = 4
 		jump_state = true
-		was_high = true
-		y_acceleration = 4
 	elif jump_state:
 		jump_state = false
 
@@ -37,7 +37,7 @@ func _fixed_process(delta):
 	if is_colliding():
 		var collider = get_collider()
 		if collider.is_in_group("wall"):
-			get_node("/root/player").stop_game()
+			get_node("/root/player").death()
 		elif collider.is_in_group("bird"):
 			got_point = true
 			get_node("/root/player").score_point()
@@ -52,11 +52,13 @@ func _process(delta):
 		
 		
 	if just_jumped:
-		get_node("jump_sound").play("jump")
+		var voice = get_node("jump_sound").play("jump")
+		get_node("jump_sound").set_volume(voice, get_node("/root/player").get_jump_sound_volume())
 		just_jumped = false
 	
 	if got_point:
-		get_node("point_sound").play("point")
+		var voice = get_node("point_sound").play("point")
+		get_node("point_sound").set_volume(voice, get_node("/root/player").get_point_sound_volume())
 		got_point = false
 	
 	if y_acceleration > 0:
@@ -64,4 +66,4 @@ func _process(delta):
 		
 	var pos = get_pos()
 	if pos.y < 0 or pos.y > 400:
-		get_node("/root/player").stop_game()
+		get_node("/root/player").death()
