@@ -4,6 +4,7 @@
  * Addd a debug screen
  * Splash Screen
  * avg. score
+ * sound settings
 
 
 

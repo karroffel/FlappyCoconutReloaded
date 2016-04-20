@@ -2,11 +2,12 @@
 extends Node
 
 var score
+var all_score
 var deaths
 
 var jump_sound_volume = 1.0
-var point_sound_volume = 0.1
-var collision_sound_volume = 0.1
+var point_sound_volume = 1.0
+var collision_sound_volume = 1.0
 
 var messages = {
 	1: "A good start!",
@@ -40,16 +41,21 @@ var messages = {
 
 func _ready():
 	score = 0
+	all_score = 0
 	deaths = 0
 
 func get_score():
 	return score
+	
+func get_all_score():
+	return all_score
 
 func set_score(s):
 	score = s
 
 func score_point():
 	score += 1
+	all_score += 1
 	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
 		get_node("/root/player").get_hud().display_message(messages[score], 2)
@@ -86,7 +92,6 @@ func set_collision_sound_volume(v):
 func change_scene(node):
 	var as = active_scene()
 	get_tree().get_current_scene().remove_child(as)
-	as.queue_free();
 	get_tree().get_current_scene().add_child(node)
 	get_tree().get_current_scene().move_child(node, 0)
 	get_tree().get_current_scene().get_child(0).set_name("active_scene")

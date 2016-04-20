@@ -1,7 +1,13 @@
 extends Node2D
 
 func _ready():
-	pass
+	var jump_vol = get_node("/root/player").get_jump_sound_volume()
+	var point_vol = get_node("/root/player").get_point_sound_volume()
+	var collision_vol = get_node("/root/player").get_collision_sound_volume()
+	
+	get_node("jump/volume").set_value(jump_vol * 100)
+	get_node("point/volume").set_value(point_vol * 100)
+	get_node("collision/volume").set_value(collision_vol * 100)
 
 func _on_jump_volume_value_changed(value):
 	get_node("/root/player").set_jump_sound_volume(value / 100.0)

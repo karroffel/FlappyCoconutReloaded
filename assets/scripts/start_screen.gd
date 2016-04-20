@@ -14,3 +14,8 @@ func _process(delta):
 	
 	if Input.is_action_pressed("jump"):
 		get_node("/root/player").change_scene(main_scene)
+
+func _on_settings_button_pressed():
+	var settings = load("scenes/settings.scn").instance()
+	settings.set_last_scene(self)
+	get_node("/root/player").change_scene(settings)

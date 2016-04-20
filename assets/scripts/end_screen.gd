@@ -12,10 +12,11 @@ func _ready():
 	
 	set_process(true)
 	var score = get_node("/root/player").get_score()
+	var all_score = get_node("/root/player").get_all_score()
 	var death = get_node("/root/player").get_deaths()
 	get_node("end/score/score").set_text(str(score))
 	get_node("end/death/deaths").set_text(str(death))
-	get_node("end/s_d/s_d").set_text(str(float(score) / float(death)))
+	get_node("end/s_d/s_d").set_text(str(float(all_score) / float(death)))
 	get_node("/root/player").set_score(0)
 	get_node("SamplePlayer").play("collision")
 
