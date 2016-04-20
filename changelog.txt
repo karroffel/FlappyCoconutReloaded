@@ -1,6 +1,7 @@
 ﻿1.0-pre-release-2
 
  * Birds and walls no longer move if hit by the coconut
+ * Addd a debug screen
 
 
 
