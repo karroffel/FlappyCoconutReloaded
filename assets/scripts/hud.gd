@@ -6,6 +6,7 @@ extends Node2D
 # var b="textvar"
 
 func _ready():
+	update_score(get_node("/root/player").get_score())
 	set_process(true)
 
 

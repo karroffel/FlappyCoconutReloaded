@@ -5,6 +5,7 @@ var main_scene
 
 func _ready():
 	set_process(true)
+	
 	main_scene = load("scenes/main.scn").instance()
 
 func _process(delta):

@@ -9,6 +9,11 @@ var jump_sound_volume = 1.0
 var point_sound_volume = 1.0
 var collision_sound_volume = 1.0
 
+
+
+var is_in_menu = false
+
+
 var messages = {
 	1: "A good start!",
 	5: "Go on, bro!",
@@ -38,6 +43,14 @@ var messages = {
 	
 	9001: "IT'S OVER 9000!!!!!"
 }
+
+
+func get_is_in_menu():
+	return is_in_menu
+
+func set_is_in_menu(m):
+	is_in_menu = m
+
 
 func _ready():
 	score = 0
