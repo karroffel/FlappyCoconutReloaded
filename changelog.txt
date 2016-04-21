@@ -8,6 +8,7 @@
  * pause screen
  * highscore
  * save state
+ * online scoreboard
 
 
 
