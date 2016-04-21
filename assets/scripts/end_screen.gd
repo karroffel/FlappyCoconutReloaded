@@ -31,6 +31,7 @@ func _ready():
 	get_node("end/death/deaths").set_text(str(death))
 	get_node("end/s_d/s_d").set_text(str(float(all_score) / float(death)))
 	get_node("/root/player").set_score(0)
+	get_node("/root/player").set_speed(-1)
 
 func _process(delta):
 	if Input.is_action_pressed("jump"):
