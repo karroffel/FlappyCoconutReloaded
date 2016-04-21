@@ -1,9 +1,12 @@
 
 extends StaticBody2D
 
-const SPEED = 140
+var speed = 140
 
 var pos
+
+func set_speed(s):
+	speed = s
 
 func _ready():
 	add_to_group("wall")
@@ -21,5 +24,5 @@ func _process(delta):
 		pos.x = 800 + 48 + 24 + diff
 		pos.y = rand_range(-60, 60)
 
-	pos.x -= SPEED * delta
+	pos.x -= speed * delta
 	set_pos(pos)

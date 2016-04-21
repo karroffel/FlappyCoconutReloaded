@@ -1,8 +1,21 @@
 
 extends Node
 
-var name
 
+
+
+
+var version = "1.0-pre-release-2 dev version"
+
+
+
+var practice_mode
+
+
+
+
+
+var name
 
 var score
 var all_score
@@ -13,6 +26,8 @@ var master_sound_volume
 var jump_sound_volume
 var point_sound_volume
 var collision_sound_volume
+
+var speed = 140
 
 
 
@@ -61,6 +76,26 @@ func _notification(what):
 
 
 
+func get_version():
+	return version
+
+
+func set_practice_mode(m):
+	practice_mode = m
+	
+func get_practice_mode():
+	return practice_mode
+
+
+
+
+
+
+
+
+
+
+
 
 func get_username():
 	return name
@@ -68,6 +103,21 @@ func get_username():
 func set_username(n):
 	name = n
 
+
+
+func set_speed(s):
+	if speed <= 0:
+		speed = 140
+	else:
+		speed = s
+	active_scene_update_speed(speed)
+
+func get_speed():
+	if speed <= 0:
+		speed = 140
+		return 140
+	else:
+		return speed
 
 
 func get_highscore():
@@ -88,11 +138,22 @@ func set_score(s):
 func score_point():
 	score += 1
 	all_score += 1
+	
+	if !practice_mode:
+		print("jup. Challenge")
+		set_speed(speed + 10)
+	
 	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
 		get_node("/root/player").get_hud().display_message(messages[score], 2)
 
 
+
+
+func active_scene_update_speed(s):
+	var sc = active_scene()
+	if sc.is_in_group("game"):
+		sc.update_speed(s)
 
 
 func get_hud():
@@ -195,6 +256,8 @@ func load_state():
 	highscore = dict["highscore"]
 	deaths    = dict["deaths"]
 	
+	practice_mode = dict["practice_mode"]
+	
 	master_sound_volume    = dict["master_sound_volume"]
 	jump_sound_volume      = dict["jump_sound_volume"]
 	point_sound_volume     = dict["point_sound_volume"]
@@ -213,6 +276,8 @@ func save_state():
 	dict["all_score"] = all_score
 	dict["highscore"] = highscore
 	dict["deaths"]    = deaths
+	
+	dict["practice_mode"] = practice_mode
 	
 	dict["master_sound_volume"]    = master_sound_volume
 	dict["jump_sound_volume"]      = jump_sound_volume
@@ -236,6 +301,8 @@ func create_initial_save_game(path):
 		"all_score": 0,
 		"highscore": 0,
 		"deaths": 0,
+		
+		"practice_mode": false,
 		
 		"master_sound_volume": 1.0,
 		"jump_sound_volume": 1.0,
