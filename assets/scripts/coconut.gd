@@ -5,6 +5,9 @@ extends KinematicBody2D
 var y_pos = 200
 var y_acceleration = 0.0
 
+const JUMP_ACC = 4
+var jump_acc_factor = JUMP_ACC
+
 var was_high = true
 var got_point = false
 
@@ -15,22 +18,33 @@ var jump_state = false
 var dying = false;
 var ded = false
 
-const GRAVITIY = -9.81
+const GRAVITY = -9.81
+var actual_gravity = -9.81
+
+const RATIO = 8 / -9.81
 
 func _ready():
 	set_fixed_process(true)
 	set_process(true)
 	just_jumped = true
-	y_acceleration = 4
+	y_acceleration = JUMP_ACC
 
 func set_dying(d):
 	dying = d
 
 func set_y_acceleration(y):
 	y_acceleration = y
+
+
+func set_speed(speed):
+	actual_gravity = GRAVITY - (speed - 140) / 10
+	jump_acc_factor = JUMP_ACC + ((speed - 140) / 50)
+	# jump_acc_factor = -actual_gravity / 3
 	
+
+
 func _fixed_process(delta):
-	y_acceleration += delta * GRAVITIY
+	y_acceleration += delta * actual_gravity
 	
 	if dying and not ded:
 		var voice = get_node("collision_sound").play("collision")
@@ -47,7 +61,7 @@ func _fixed_process(delta):
 		if not jump_state:
 			just_jumped = true
 			was_high = true
-			y_acceleration = 4
+			y_acceleration = jump_acc_factor
 		jump_state = true
 	elif jump_state:
 		jump_state = false

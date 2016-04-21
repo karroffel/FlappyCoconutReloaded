@@ -11,11 +11,14 @@ const FPS_COOLDOWN = 0.5
 var fps_ttl = 0
 
 func _ready():
+	get_node("header").set_text(get_node("/root/player").get_version())
 	set_process(true)
 	hide()
 
 
 func _process(delta):
+	
+	var player = get_node("/root/player")
 	
 	var is_pressed = Input.is_action_pressed("debug_key")
 	
@@ -32,6 +35,10 @@ func _process(delta):
 			fps_ttl = FPS_COOLDOWN
 			fps = 1 / delta
 			get_node("fps/fps2").set_text(str(int(fps)))
+			
+			var speed = player.get_speed()
+			get_node("speed/display").set_text(str(int(speed)))
+			
 	
 func toggle_screen():
 	

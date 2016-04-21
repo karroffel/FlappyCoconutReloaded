@@ -21,6 +21,7 @@ func _on_settings_pressed():
 func _on_continue_pressed():
 	last_scene = null
 	var main_scene = load("scenes/main.scn").instance()
+	main_scene.update_speed(get_node("/root/player").get_speed())
 	get_node("/root/player").change_scene(main_scene)
 
 
