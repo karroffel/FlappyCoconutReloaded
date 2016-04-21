@@ -11,7 +11,6 @@ func _ready():
 	add_to_group("game")
 
 	var speed = get_node("/root/player").get_speed()
-	print("speed: " + str(speed))
 	
 	set_process(true)
 

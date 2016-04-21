@@ -139,8 +139,7 @@ func score_point():
 	score += 1
 	all_score += 1
 	
-	if !practice_mode:
-		print("jup. Challenge")
+	if !practice_mode and score % 5 == 0:
 		set_speed(speed + 10)
 	
 	get_node("/root/player").get_hud().update_score(score)

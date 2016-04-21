@@ -38,7 +38,7 @@ func set_y_acceleration(y):
 
 func set_speed(speed):
 	actual_gravity = GRAVITY - (speed - 140) / 10
-	# jump_acc_factor = JUMP_ACC + ((speed - 140) / 50)
+	jump_acc_factor = JUMP_ACC + ((speed - 140) / 50)
 	# jump_acc_factor = -actual_gravity / 3
 	
 
