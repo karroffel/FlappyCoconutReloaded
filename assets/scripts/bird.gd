@@ -20,7 +20,7 @@ func _process(delta):
 	
 	if (has_played and not get_node("AnimationPlayer").is_playing()) or pos.x < -20:
 		var posx = pos.x
-		pos = Vector2(800 + 48 + 17 + 17 / 2 + posx, rand_range(75, 325))
+		pos = Vector2(800 + 48 + 17 + 14 / 2 + posx, rand_range(75, 325))
 		has_played = false
 		
 	set_pos(pos)

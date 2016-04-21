@@ -2,6 +2,13 @@
 
  * Birds and walls no longer move if hit by the coconut
  * Addd a debug screen
+ * Splash Screen
+ * avg. score
+ * sound settings
+ * pause screen
+ * highscore
+ * save state
+ * online scoreboard
 
 
 
