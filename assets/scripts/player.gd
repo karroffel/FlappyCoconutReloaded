@@ -1,6 +1,9 @@
 
 extends Node
 
+var name
+
+
 var score
 var all_score
 var highscore
@@ -57,8 +60,21 @@ func _notification(what):
 		quit_game()
 
 
+
+
+func get_username():
+	return name
+
+func set_username(n):
+	name = n
+
+
+
 func get_highscore():
 	return highscore
+
+func set_hightscore(h):
+	highscore = h
 
 func get_score():
 	return score
@@ -71,8 +87,6 @@ func set_score(s):
 
 func score_point():
 	score += 1
-	if score > highscore:
-		highscore = score
 	all_score += 1
 	get_node("/root/player").get_hud().update_score(score)
 	if messages.has(score):
@@ -130,6 +144,11 @@ func death():
 	deaths += 1
 	#var end_screen = load("scenes/end_screen.scn").instance()
 	#change_scene(end_screen)
+	if score > highscore:
+		# send highscore to server?!
+		highscore = score
+		get_node("/root/scoreboard").send_highscore(name, highscore)
+		
 	var child_count = active_scene().get_child_count()
 	var child
 	for i in range (0, child_count):
@@ -171,6 +190,7 @@ func load_state():
 	var dict = {}
 	dict.parse_json(text)
 
+	name      = dict["name"]
 	all_score = dict["all_score"]
 	highscore = dict["highscore"]
 	deaths    = dict["deaths"]
@@ -189,6 +209,7 @@ func save_state():
 	
 	var dict = {}
 	
+	dict["name"]      = name
 	dict["all_score"] = all_score
 	dict["highscore"] = highscore
 	dict["deaths"]    = deaths
@@ -210,6 +231,8 @@ func create_initial_save_game(path):
 	var file = File.new()
 	file.open_encrypted_with_pass(path, File.WRITE, PASSWORD)
 	var dict = {
+		"name": "unnamed",
+	
 		"all_score": 0,
 		"highscore": 0,
 		"deaths": 0,
